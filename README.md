@@ -51,7 +51,7 @@ Write pipeline:
 
 ***After change global scripts may require administrative [approval](https://wiki.jenkins-ci.org/display/JENKINS/Script+Security+Plugin)***
 
-## Sample usage
+## Usage sample
 All modules builds default Jenkinsfile. This is libs and other dependencies. But have modules with specific build configurations (run hard tests, deploy to docker etc.)
 Default configurations sample:
 ```groovy

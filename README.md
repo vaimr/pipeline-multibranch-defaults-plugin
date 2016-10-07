@@ -1,7 +1,7 @@
 # Motivation
 Concept of Pipeline plugins it requires save Jenkinsfile in root repository. Workflow Multibranch Plugin extend this idea to build all branches in repository. This is very easy for CI.
 
-In organization may be many modules in separate repositories (I have over 100). This is exactly modules. They may be build one Jenkinsfile. But save duplicate Jenkins file each repository makes very hard support.
+In company may be many modules in separate repositories (I have over 100). This is exactly modules. They may be build one Jenkinsfile. But save duplicate Jenkins file each repository makes very hard support.
 
 This is plugin have Jenkinsfile in [global Jenkins script store](https://github.com/jenkinsci/config-file-provider-plugin). And load is for all tasks. 
 

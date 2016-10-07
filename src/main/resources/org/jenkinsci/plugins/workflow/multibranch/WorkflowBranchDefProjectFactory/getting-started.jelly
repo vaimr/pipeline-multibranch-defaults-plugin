@@ -1,7 +1,7 @@
 <!--
  ~ The MIT License
  ~
- ~ Copyright (c) 2016, CloudBees, Inc.
+ ~ Copyright (c) 2016 Saponenko Denis
  ~
  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
  ~ of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,9 @@
     <a target="_blank"
        href="https://github.com/jenkinsci/workflow-plugin/blob/master/TUTORIAL.md#understanding-flow-scripts">Jenkins
         Pipeline script</a>. See also:
+    <a target="_blank"
+       href="https://github.com/jenkinsci/workflow-multibranch-plugin">
+        Workflow Multibranch Plugin</a>.
     <a target="_blank"
        href="https://github.com/jenkinsci/workflow-plugin/blob/master/TUTORIAL.md#creating-multibranch-projects">
         Creating Multibranch Projects</a>.

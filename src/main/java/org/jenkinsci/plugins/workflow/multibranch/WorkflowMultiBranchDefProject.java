@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 CloudBees, Inc.
+ * Copyright (c) 2016 Saponenko Denis
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -65,7 +65,7 @@ public class WorkflowMultiBranchDefProject extends WorkflowMultiBranchProject {
         }
 
         public String getIconFilePathPattern() {
-            return "plugin/workflow-multibranch/images/:size/pipelinemultibranchdefproject.png";
+            return "plugin/workflow-multibranch-def/images/:size/pipelinemultibranchdefproject.png";
         }
 
         @Override

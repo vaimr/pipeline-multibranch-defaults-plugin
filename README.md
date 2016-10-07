@@ -49,7 +49,7 @@ Write pipeline:
 
 ![pipeline](https://habrastorage.org/files/37e/807/853/37e807853c03404bacf8362a1bfc3c50.png)
 
-***After change global scripts may require administrative (approval)[https://wiki.jenkins-ci.org/display/JENKINS/Script+Security+Plugin]***
+***After change global scripts may require administrative [approval](https://wiki.jenkins-ci.org/display/JENKINS/Script+Security+Plugin)***
 
 ## Sample usage
 All modules builds default Jenkinsfile. This is libs and other dependencies. But have modules with specific build configurations (run hard tests, deploy to docker etc.)

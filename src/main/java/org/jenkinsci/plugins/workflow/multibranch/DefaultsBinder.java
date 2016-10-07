@@ -62,20 +62,6 @@ class DefaultsBinder extends FlowDefinition {
             throw new IllegalStateException("inappropriate context");
         }
 
-        Queue.Executable executable = handle.getExecutable();
-        File rootDir;
-        if (executable != null) {
-            WorkflowJob workflowJob = ((WorkflowJob) handle.getExecutable().getParent());
-            rootDir = workflowJob.getParent().getRootDir();
-            if (rootDir != null) {
-                File localConfig = new File(rootDir + File.separator + WorkflowBranchDefProjectFactory.SCRIPT);
-                if (localConfig.exists()) {
-                    return new CpsFlowDefinition(FileUtils.readFileToString(localConfig, "utf-8"), false).
-                        create(handle, listener, actions);
-                }
-            }
-        }
-
         ConfigProvider configProvider = ConfigProvider.getByIdOrNull(GroovyScript.class.getName());
         if (configProvider != null) {
             Config config = configProvider.getConfigById(WorkflowBranchDefProjectFactory.SCRIPT);

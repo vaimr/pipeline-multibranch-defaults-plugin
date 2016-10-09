@@ -25,10 +25,8 @@
 package org.jenkinsci.plugins.workflow.multibranch;
 
 import hudson.Extension;
-import hudson.FilePath;
 import hudson.model.*;
 import jenkins.model.Jenkins;
-import org.apache.commons.io.FileUtils;
 import org.jenkinsci.lib.configprovider.ConfigProvider;
 import org.jenkinsci.lib.configprovider.model.Config;
 import org.jenkinsci.plugins.configfiles.groovy.GroovyScript;
@@ -40,7 +38,6 @@ import org.jenkinsci.plugins.workflow.flow.FlowExecutionOwner;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -57,8 +54,8 @@ class DefaultsBinder extends FlowDefinition {
         if (jenkins == null) {
             throw new IllegalStateException("inappropriate context");
         }
-        FilePath workspacePath = jenkins.getWorkspaceFor(((WorkflowRun) handle.getExecutable()).getParent());
-        if (workspacePath == null || workspacePath.child(WorkflowBranchDefProjectFactory.SCRIPT).exists()) {
+        Queue.Executable exec = handle.getExecutable();
+        if (!(exec instanceof WorkflowRun)) {
             throw new IllegalStateException("inappropriate context");
         }
 
@@ -69,7 +66,7 @@ class DefaultsBinder extends FlowDefinition {
                 return new CpsFlowDefinition(config.content, false).create(handle, listener, actions);
             }
         }
-        throw new IllegalArgumentException(WorkflowBranchDefProjectFactory.SCRIPT + " not found");
+        throw new IllegalArgumentException("Default " + WorkflowBranchDefProjectFactory.SCRIPT + " not found. Check configuration.");
     }
 
     @Extension

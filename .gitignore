@@ -1,4 +1,4 @@
-target
-work
-workflow-multibranch.iml
-.idea
+/target
+/work
+*.iml
+/.idea

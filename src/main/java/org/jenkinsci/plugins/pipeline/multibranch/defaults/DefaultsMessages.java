@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.workflow.multibranch;
+package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import org.jvnet.localizer.Localizable;
 import org.jvnet.localizer.ResourceBundleHolder;
@@ -35,54 +35,54 @@ import org.jvnet.localizer.ResourceBundleHolder;
     "PMD",
     "all"
 })
-public class DefMessages {
+public class DefaultsMessages {
     /**
      * The resource bundle reference
      */
-    private final static ResourceBundleHolder holder = ResourceBundleHolder.get(DefMessages.class);
+    private final static ResourceBundleHolder holder = ResourceBundleHolder.get(DefaultsMessages.class);
 
     /**
-     * Key {@code WorkflowMultiBranchDefProject.Description}: {@code Creates a
+     * Key {@code PipelineMultiBranchDefaultsProject.Description}: {@code Creates a
      * set of Pipeline projects according to detected branches in one SCM
      * repository.}.
      *
      * @return {@code Creates a set of Pipeline projects according to detected
      * branches in one SCM repository.}
      */
-    public static String WorkflowMultiBranchDefProject_Description() {
-        return holder.format("WorkflowMultiBranchDefProject.Description");
+    public static String PipelineMultiBranchDefaultsProject_Description() {
+        return holder.format("PipelineMultiBranchDefaultsProject.Description");
     }
 
     /**
-     * Key {@code WorkflowMultiBranchDefProject.Description}: {@code Creates a
+     * Key {@code PipelineMultiBranchDefaultsProject.Description}: {@code Creates a
      * set of Pipeline projects according to detected branches in one SCM
      * repository.}.
      *
      * @return {@code Creates a set of Pipeline projects according to detected
      * branches in one SCM repository.}
      */
-    public static Localizable _WorkflowMultiBranchDefProject_Description() {
-        return new Localizable(holder, "WorkflowMultiBranchDefProject.Description");
+    public static Localizable _PipelineMultiBranchDefaultsProject_Description() {
+        return new Localizable(holder, "PipelineMultiBranchDefaultsProject.Description");
     }
 
     /**
-     * Key {@code WorkflowMultiBranchDefProject.DisplayName}: {@code Multibranch
+     * Key {@code PipelineMultiBranchDefaultsProject.DisplayName}: {@code Multibranch
      * Pipeline}.
      *
      * @return {@code Multibranch Pipeline}
      */
-    public static String WorkflowMultiBranchDefProject_DisplayName() {
-        return holder.format("WorkflowMultiBranchDefProject.DisplayName");
+    public static String PipelineMultiBranchDefaultsProject_DisplayName() {
+        return holder.format("PipelineMultiBranchDefaultsProject.DisplayName");
     }
 
     /**
-     * Key {@code WorkflowMultiBranchDefProject.DisplayName}: {@code Multibranch
+     * Key {@code PipelineMultiBranchDefaultsProject.DisplayName}: {@code Multibranch
      * Pipeline}.
      *
      * @return {@code Multibranch Pipeline}
      */
-    public static Localizable _WorkflowMultiBranchDefProject_DisplayName() {
-        return new Localizable(holder, "WorkflowMultiBranchDefProject.DisplayName");
+    public static Localizable _PipelineMultiBranchDefaultsProject_DisplayName() {
+        return new Localizable(holder, "PipelineMultiBranchDefaultsProject.DisplayName");
     }
 
 }

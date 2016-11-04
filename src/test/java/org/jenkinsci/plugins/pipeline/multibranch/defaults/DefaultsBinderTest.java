@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.workflow.multibranch;
+package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import jenkins.branch.BranchProperty;
 import jenkins.branch.BranchSource;
@@ -34,6 +34,7 @@ import org.jenkinsci.lib.configprovider.model.Config;
 import org.jenkinsci.plugins.configfiles.groovy.GroovyScript;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
 import org.jenkinsci.plugins.workflow.test.steps.SemaphoreStep;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -62,10 +63,10 @@ public class DefaultsBinderTest {
         sampleGitRepo.init();
         sampleGitRepo.write("file", "initial content");
         sampleGitRepo.git("commit", "--all", "--message=flow");
-        WorkflowMultiBranchProject mp = r.jenkins.createProject(WorkflowMultiBranchDefProject.class, "p");
+        WorkflowMultiBranchProject mp = r.jenkins.createProject(PipelineMultiBranchDefaultsProject.class, "p");
         mp.getSourcesList().add(new BranchSource(new GitSCMSource(null, sampleGitRepo.toString(), "", "*", "", false),
             new DefaultBranchPropertyStrategy(new BranchProperty[0])));
-        WorkflowJob p = WorkflowMultiBranchDefProjectTest.scheduleAndFindBranchProject(mp, "master");
+        WorkflowJob p = PipelineMultiBranchDefaultsProjectTest.scheduleAndFindBranchProject(mp, "master");
         SemaphoreStep.waitForStart("wait/1", null);
         WorkflowRun b1 = p.getLastBuild();
         assertNotNull(b1);
@@ -86,10 +87,10 @@ public class DefaultsBinderTest {
         sampleGitRepo.git("add", "Jenkinsfile");
         sampleGitRepo.write("file", "initial content");
         sampleGitRepo.git("commit", "--all", "--message=flow");
-        WorkflowMultiBranchProject mp = r.jenkins.createProject(WorkflowMultiBranchDefProject.class, "p");
+        WorkflowMultiBranchProject mp = r.jenkins.createProject(PipelineMultiBranchDefaultsProject.class, "p");
         mp.getSourcesList().add(new BranchSource(new GitSCMSource(null, sampleGitRepo.toString(), "", "*", "", false),
             new DefaultBranchPropertyStrategy(new BranchProperty[0])));
-        WorkflowJob p = WorkflowMultiBranchDefProjectTest.scheduleAndFindBranchProject(mp, "master");
+        WorkflowJob p = PipelineMultiBranchDefaultsProjectTest.scheduleAndFindBranchProject(mp, "master");
         SemaphoreStep.waitForStart("wait/1", null);
         WorkflowRun b1 = p.getLastBuild();
         assertNotNull(b1);

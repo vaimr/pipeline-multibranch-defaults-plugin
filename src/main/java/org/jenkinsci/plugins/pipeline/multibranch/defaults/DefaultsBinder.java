@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.workflow.multibranch;
+package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import hudson.Extension;
 import hudson.model.*;
@@ -37,6 +37,7 @@ import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.flow.FlowExecutionOwner;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory;
 
 import java.util.List;
 
@@ -61,12 +62,12 @@ class DefaultsBinder extends FlowDefinition {
 
         ConfigProvider configProvider = ConfigProvider.getByIdOrNull(GroovyScript.class.getName());
         if (configProvider != null) {
-            Config config = configProvider.getConfigById(WorkflowBranchDefProjectFactory.SCRIPT);
+            Config config = configProvider.getConfigById(PipelineBranchDefaultsProjectFactory.SCRIPT);
             if (config != null) {
                 return new CpsFlowDefinition(config.content, false).create(handle, listener, actions);
             }
         }
-        throw new IllegalArgumentException("Default " + WorkflowBranchDefProjectFactory.SCRIPT + " not found. Check configuration.");
+        throw new IllegalArgumentException("Default " + PipelineBranchDefaultsProjectFactory.SCRIPT + " not found. Check configuration.");
     }
 
     @Extension
@@ -74,7 +75,7 @@ class DefaultsBinder extends FlowDefinition {
 
         @Override
         public String getDisplayName() {
-            return "Pipeline script from default " + WorkflowBranchProjectFactory.SCRIPT;
+            return "Pipeline script from default " + PipelineBranchDefaultsProjectFactory.SCRIPT;
         }
 
     }
@@ -88,7 +89,7 @@ class DefaultsBinder extends FlowDefinition {
         @Override
         public boolean filter(Object context, Descriptor descriptor) {
             if (descriptor instanceof DescriptorImpl) {
-                return context instanceof WorkflowJob && ((WorkflowJob) context).getParent() instanceof WorkflowMultiBranchDefProject;
+                return context instanceof WorkflowJob && ((WorkflowJob) context).getParent() instanceof PipelineMultiBranchDefaultsProject;
             }
             return true;
         }

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.workflow.multibranch;
+package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import hudson.Extension;
 import hudson.model.TaskListener;
@@ -30,6 +30,7 @@ import jenkins.branch.MultiBranchProject;
 import jenkins.scm.api.SCMSource;
 import jenkins.scm.api.SCMSourceCriteria;
 import org.jenkinsci.plugins.workflow.flow.FlowDefinition;
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import java.io.IOException;
@@ -37,10 +38,11 @@ import java.io.IOException;
 /**
  * Recognizes and builds by default {@code Jenkinsfile}.
  */
-public class WorkflowBranchDefProjectFactory extends WorkflowBranchProjectFactory {
+public class PipelineBranchDefaultsProjectFactory extends WorkflowBranchProjectFactory {
+    public static final String SCRIPT = "Jenkinsfile";
 
     @DataBoundConstructor
-    public WorkflowBranchDefProjectFactory() {
+    public PipelineBranchDefaultsProjectFactory() {
     }
 
     @Override
@@ -60,6 +62,7 @@ public class WorkflowBranchDefProjectFactory extends WorkflowBranchProjectFactor
 
     @Extension
     public static class DescriptorDefaultImpl extends AbstractWorkflowBranchProjectFactoryDescriptor {
+
         @Override
         public boolean isApplicable(Class<? extends MultiBranchProject> clazz) {
             return super.isApplicable(clazz);

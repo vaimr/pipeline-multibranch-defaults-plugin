@@ -22,12 +22,13 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.workflow.multibranch;
+package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import jenkins.branch.BranchSource;
 import jenkins.plugins.git.GitSCMSource;
 import jenkins.plugins.git.GitSampleRepoRule;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,9 +36,8 @@ import org.jvnet.hudson.test.BuildWatcher;
 import org.jvnet.hudson.test.JenkinsRule;
 
 import static net.sf.ezmorph.test.ArrayAssertions.assertEquals;
-import static org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchDefProjectTest.scheduleAndFindBranchProject;
 
-public class WorkflowBranchDefProjectFactoryTest {
+public class PipelineBranchDefaultsProjectFactoryTest {
     @ClassRule
     public static BuildWatcher buildWatcher = new BuildWatcher();
     @Rule
@@ -52,9 +52,9 @@ public class WorkflowBranchDefProjectFactoryTest {
         sampleRepo.write("file", "initial content");
         sampleRepo.git("add", "file");
         sampleRepo.git("commit", "--all", "--message=flow");
-        WorkflowMultiBranchProject mp = r.jenkins.createProject(WorkflowMultiBranchDefProject.class, "p");
+        WorkflowMultiBranchProject mp = r.jenkins.createProject(PipelineMultiBranchDefaultsProject.class, "p");
         mp.getSourcesList().add(new BranchSource(new GitSCMSource(null, sampleRepo.toString(), "", "*", "", false)));
-        WorkflowJob p = scheduleAndFindBranchProject(mp, "dev%2Fmain");
+        WorkflowJob p = PipelineMultiBranchDefaultsProjectTest.scheduleAndFindBranchProject(mp, "dev%2Fmain");
         assertEquals(2, mp.getItems().size());
     }
 

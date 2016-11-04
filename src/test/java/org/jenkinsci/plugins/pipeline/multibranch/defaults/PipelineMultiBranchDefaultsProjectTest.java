@@ -22,10 +22,13 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.workflow.multibranch;
+package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import com.cloudbees.hudson.plugins.folder.computed.FolderComputation;
+import org.jenkinsci.plugins.pipeline.multibranch.defaults.PipelineBranchDefaultsProjectFactory;
+import org.jenkinsci.plugins.pipeline.multibranch.defaults.PipelineMultiBranchDefaultsProject;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -38,14 +41,14 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by dsaponenko on 09.10.16.
  */
-public class WorkflowMultiBranchDefProjectTest {
+public class PipelineMultiBranchDefaultsProjectTest {
     @Rule
     public JenkinsRule r = new JenkinsRule();
 
     @Test
     public void newProjectFactory() throws Exception {
-        assertTrue(r.jenkins.createProject(WorkflowMultiBranchDefProject.class, "test").
-            newProjectFactory() instanceof WorkflowBranchDefProjectFactory);
+        assertTrue(r.jenkins.createProject(PipelineMultiBranchDefaultsProject.class, "test").
+            newProjectFactory() instanceof PipelineBranchDefaultsProjectFactory);
     }
 
 

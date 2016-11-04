@@ -22,75 +22,53 @@
  * THE SOFTWARE.
  */
 
-package org.jenkinsci.plugins.workflow.multibranch;
+package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import hudson.Extension;
-import hudson.model.Action;
-import hudson.model.Item;
 import hudson.model.ItemGroup;
 import hudson.model.TopLevelItem;
 import jenkins.branch.BranchProjectFactory;
-import jenkins.model.TransientActionFactory;
-import org.jenkinsci.plugins.workflow.cps.Snippetizer;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
 
-import java.util.Collection;
-import java.util.Collections;
+import javax.annotation.Nonnull;
 
 /**
  * Representation of a set of workflows keyed off of source branches.
  */
 @SuppressWarnings({"unchecked", "rawtypes"}) // core’s fault
-public class WorkflowMultiBranchDefProject extends WorkflowMultiBranchProject {
+public class PipelineMultiBranchDefaultsProject extends WorkflowMultiBranchProject {
 
-    public WorkflowMultiBranchDefProject(ItemGroup parent, String name) {
+    public PipelineMultiBranchDefaultsProject(ItemGroup parent, String name) {
         super(parent, name);
     }
 
+    @Nonnull
     protected BranchProjectFactory<WorkflowJob, WorkflowRun> newProjectFactory() {
-        return new WorkflowBranchDefProjectFactory();
+        return new PipelineBranchDefaultsProjectFactory();
     }
 
     @Extension
     public static class DescriptorImpl extends WorkflowMultiBranchProject.DescriptorImpl {
 
+        @Nonnull
         @Override
         public String getDisplayName() {
-            return DefMessages.WorkflowMultiBranchDefProject_DisplayName();
+            return DefaultsMessages.PipelineMultiBranchDefaultsProject_DisplayName();
         }
 
         public String getDescription() {
-            return DefMessages.WorkflowMultiBranchDefProject_Description();
+            return DefaultsMessages.PipelineMultiBranchDefaultsProject_Description();
         }
 
         public String getIconFilePathPattern() {
-            return "plugin/workflow-multibranch-def/images/:size/pipelinemultibranchdefproject.png";
+            return "plugin/pipeline-multibranch-defaults/images/:size/pipelinemultibranchdefaultsproject.png";
         }
 
         @Override
         public TopLevelItem newInstance(ItemGroup parent, String name) {
-            return new WorkflowMultiBranchDefProject(parent, name);
+            return new PipelineMultiBranchDefaultsProject(parent, name);
         }
     }
-
-    @Extension
-    public static class PerFolderAdder extends TransientActionFactory<WorkflowMultiBranchDefProject> {
-
-        @Override
-        public Class<WorkflowMultiBranchDefProject> type() {
-            return WorkflowMultiBranchDefProject.class;
-        }
-
-        @Override
-        public Collection<? extends Action> createFor(WorkflowMultiBranchDefProject target) {
-            if (target.hasPermission(Item.EXTENDED_READ)) {
-                return Collections.singleton(new Snippetizer.LocalAction());
-            } else {
-                return Collections.emptySet();
-            }
-        }
-
-    }
-
 }

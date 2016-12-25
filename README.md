@@ -90,7 +90,7 @@ currentBuild.result = 'SUCCESS'
 ```
 
 # Versions
-To be released
+1.0 (18.11.2016) - First release under per-plugin versioning scheme.
 
 # Authors
 * **Saponenko Denis** - *Initial work* - [vaimr](https://github.com/vaimr)

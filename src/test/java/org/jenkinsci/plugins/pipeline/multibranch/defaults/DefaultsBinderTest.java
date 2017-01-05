@@ -31,6 +31,8 @@ import jenkins.plugins.git.GitSCMSource;
 import jenkins.plugins.git.GitSampleRepoRule;
 import org.jenkinsci.lib.configprovider.ConfigProvider;
 import org.jenkinsci.lib.configprovider.model.Config;
+import org.jenkinsci.plugins.configfiles.ConfigFileStore;
+import org.jenkinsci.plugins.configfiles.GlobalConfigFiles;
 import org.jenkinsci.plugins.configfiles.groovy.GroovyScript;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
@@ -53,12 +55,15 @@ public class DefaultsBinderTest {
     @Rule
     public GitSampleRepoRule sampleGitRepo = new GitSampleRepoRule();
 
+
     @Test
     public void testDefaultJenkinsFile() throws Exception {
-        ConfigProvider configProvider = ConfigProvider.getByIdOrNull(GroovyScript.class.getName());
+        GlobalConfigFiles globalConfigFiles = r.jenkins.getExtensionList(GlobalConfigFiles.class).get(GlobalConfigFiles.class);
+        ConfigFileStore store = globalConfigFiles.get();
+
         Config config = new GroovyScript("Jenkinsfile", "Jenkinsfile", "",
             "semaphore 'wait'; node {checkout scm; echo readFile('file')}");
-        configProvider.save(config);
+        store.save(config);
 
         sampleGitRepo.init();
         sampleGitRepo.write("file", "initial content");
@@ -77,10 +82,12 @@ public class DefaultsBinderTest {
 
     @Test
     public void testDefaultJenkinsFileLoadFromWorkspace() throws Exception {
-        ConfigProvider configProvider = ConfigProvider.getByIdOrNull(GroovyScript.class.getName());
+        GlobalConfigFiles globalConfigFiles = r.jenkins.getExtensionList(GlobalConfigFiles.class).get(GlobalConfigFiles.class);
+        ConfigFileStore store = globalConfigFiles.get();
         Config config = new GroovyScript("Jenkinsfile", "Jenkinsfile", "",
             "semaphore 'wait'; node {checkout scm; load 'Jenkinsfile'}");
-        configProvider.save(config);
+        store.save(config);
+
 
         sampleGitRepo.init();
         sampleGitRepo.write("Jenkinsfile", "echo readFile('file')");

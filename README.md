@@ -91,6 +91,10 @@ currentBuild.result = 'SUCCESS'
 
 # Versions
 1.0 (18.11.2016) - First release under per-plugin versioning scheme.
+1.1 (05.01.2017) - Actual dependencies versions. Thanks @nichobbs #1
+__WARNING__ This version is now saved different then it used to and a rollback of this release is not supported. If you'r unsure, please save your configuration before updating.
+Update plugins [Config file provider](https://wiki.jenkins-ci.org/display/JENKINS/Config+File+Provider+Plugin), [Workflow multibranch](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Multibranch+Plugin) and their dependence.
+
 
 # Authors
 * **Saponenko Denis** - *Initial work* - [vaimr](https://github.com/vaimr)

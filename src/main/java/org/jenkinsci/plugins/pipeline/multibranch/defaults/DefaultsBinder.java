@@ -29,7 +29,8 @@ import hudson.model.*;
 import jenkins.model.Jenkins;
 import org.jenkinsci.lib.configprovider.ConfigProvider;
 import org.jenkinsci.lib.configprovider.model.Config;
-import org.jenkinsci.plugins.configfiles.groovy.GroovyScript;
+import org.jenkinsci.plugins.configfiles.ConfigFileStore;
+import org.jenkinsci.plugins.configfiles.GlobalConfigFiles;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.flow.FlowDefinition;
 import org.jenkinsci.plugins.workflow.flow.FlowDefinitionDescriptor;
@@ -60,9 +61,9 @@ class DefaultsBinder extends FlowDefinition {
             throw new IllegalStateException("inappropriate context");
         }
 
-        ConfigProvider configProvider = ConfigProvider.getByIdOrNull(GroovyScript.class.getName());
-        if (configProvider != null) {
-            Config config = configProvider.getConfigById(PipelineBranchDefaultsProjectFactory.SCRIPT);
+        ConfigFileStore store = GlobalConfigFiles.get();
+        if (store != null) {
+            Config config = store.getById(PipelineBranchDefaultsProjectFactory.SCRIPT);
             if (config != null) {
                 return new CpsFlowDefinition(config.content, false).create(handle, listener, actions);
             }

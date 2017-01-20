@@ -33,6 +33,7 @@ import org.jenkinsci.plugins.workflow.flow.FlowDefinition;
 import org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 
 /**
@@ -65,9 +66,10 @@ public class PipelineBranchDefaultsProjectFactory extends WorkflowBranchProjectF
 
         @Override
         public boolean isApplicable(Class<? extends MultiBranchProject> clazz) {
-            return super.isApplicable(clazz);
+            return PipelineMultiBranchDefaultsProject.class.isAssignableFrom(clazz);
         }
 
+        @Nonnull
         @Override
         public String getDisplayName() {
             return "by default " + SCRIPT;

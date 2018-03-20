@@ -27,6 +27,7 @@ package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 import hudson.Extension;
 import hudson.model.*;
 import jenkins.model.Jenkins;
+import org.jenkinsci.plugins.configfiles.ConfigFiles;
 import org.jenkinsci.lib.configprovider.ConfigProvider;
 import org.jenkinsci.lib.configprovider.model.Config;
 import org.jenkinsci.plugins.configfiles.ConfigFileStore;
@@ -45,8 +46,9 @@ import java.util.List;
 /**
  * Checks out the local default version of {@link WorkflowBranchProjectFactory#SCRIPT} in order if exist:
  * 1. From module checkout
- * 1. From task workspace directory
- * 2. From global jenkins managed files
+ * 2. From task workspace directory
+ * 3. From the Job's ConfigFileProvider 
+ * 4. From global jenkins managed files
  */
 class DefaultsBinder extends FlowDefinition {
 
@@ -60,13 +62,17 @@ class DefaultsBinder extends FlowDefinition {
         if (!(exec instanceof WorkflowRun)) {
             throw new IllegalStateException("inappropriate context");
         }
-
-        ConfigFileStore store = GlobalConfigFiles.get();
-        if (store != null) {
-            Config config = store.getById(PipelineBranchDefaultsProjectFactory.SCRIPT);
-            if (config != null) {
-                return new CpsFlowDefinition(config.content, false).create(handle, listener, actions);
+        Config config = ConfigFiles.getByIdOrNull((Run<?, ?>)exec, PipelineBranchDefaultsProjectFactory.SCRIPT);        
+        if (config == null) {
+            ConfigFileStore store = GlobalConfigFiles.get();
+            if (store != null) {
+                Config config = store.getById(PipelineBranchDefaultsProjectFactory.SCRIPT);
+                if (config != null) {
+                    return new CpsFlowDefinition(config.content, false).create(handle, listener, actions);
+                }
             }
+        } else {
+            return new CpsFlowDefinition(config.content, false).create(handle, listener, actions);
         }
         throw new IllegalArgumentException("Default " + PipelineBranchDefaultsProjectFactory.SCRIPT + " not found. Check configuration.");
     }

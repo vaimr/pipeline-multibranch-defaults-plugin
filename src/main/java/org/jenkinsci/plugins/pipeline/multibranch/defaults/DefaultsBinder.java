@@ -50,6 +50,21 @@ import java.util.List;
  */
 class DefaultsBinder extends FlowDefinition {
 
+    private String scriptId;
+    private boolean useSandbox;
+
+    public DefaultsBinder(String scriptId, boolean useSandbox) {
+        this.scriptId = scriptId;
+        this.useSandbox = useSandbox;
+    }
+
+    public Object readResolve() {
+        if (this.scriptId == null) {
+            this.scriptId = PipelineBranchDefaultsProjectFactory.SCRIPT;
+        }
+        return this;
+    }
+
     @Override
     public FlowExecution create(FlowExecutionOwner handle, TaskListener listener, List<? extends Action> actions) throws Exception {
         Jenkins jenkins = Jenkins.getInstance();
@@ -63,9 +78,14 @@ class DefaultsBinder extends FlowDefinition {
 
         ConfigFileStore store = GlobalConfigFiles.get();
         if (store != null) {
-            Config config = store.getById(PipelineBranchDefaultsProjectFactory.SCRIPT);
+            Config config = store.getById(scriptId);
             if (config != null) {
-                return new CpsFlowDefinition(config.content, false).create(handle, listener, actions);
+                if (useSandbox) {
+                    listener.getLogger().println("Running with default Jenkinsfile ID: " + scriptId + "; within Groovy sandbox.");
+                } else {
+                    listener.getLogger().println("Running with default Jenkinsfile ID: " + scriptId);
+                }
+                return new CpsFlowDefinition(config.content, useSandbox).create(handle, listener, actions);
             }
         }
         throw new IllegalArgumentException("Default " + PipelineBranchDefaultsProjectFactory.SCRIPT + " not found. Check configuration.");

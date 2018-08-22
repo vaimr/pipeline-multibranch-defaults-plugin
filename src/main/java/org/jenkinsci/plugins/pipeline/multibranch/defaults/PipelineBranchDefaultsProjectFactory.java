@@ -45,14 +45,7 @@ public class PipelineBranchDefaultsProjectFactory extends AbstractWorkflowBranch
     public static final String SCRIPT = "Jenkinsfile";
 
     private String scriptId = SCRIPT;
-    private Boolean useSandbox = false;
-
-    public Object readResolve() {
-        if (this.scriptId == null) {
-            this.scriptId = SCRIPT;
-        }
-        return this;
-    }
+    private boolean useSandbox = false;
 
     @DataBoundConstructor
     public PipelineBranchDefaultsProjectFactory() { }

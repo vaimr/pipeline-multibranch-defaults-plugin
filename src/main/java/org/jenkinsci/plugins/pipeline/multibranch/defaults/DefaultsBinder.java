@@ -58,13 +58,6 @@ class DefaultsBinder extends FlowDefinition {
         this.useSandbox = useSandbox;
     }
 
-    public Object readResolve() {
-        if (this.scriptId == null) {
-            this.scriptId = PipelineBranchDefaultsProjectFactory.SCRIPT;
-        }
-        return this;
-    }
-
     @Override
     public FlowExecution create(FlowExecutionOwner handle, TaskListener listener, List<? extends Action> actions) throws Exception {
         Jenkins jenkins = Jenkins.getInstance();

@@ -24,6 +24,11 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core">
-    <!-- TODO alternately, hide the selector, as in LiterateMultibranchProject/configure-factory.jelly -->
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+    <f:entry title="${%Script ID}" field="scriptId">
+        <f:textbox value="${instance.scriptId}" default="Jenkinsfile" />
+    </f:entry>
+    <f:entry title="${%Run default Jenkinsfile within Groovy sandbox}" field="useSandbox">
+        <f:checkbox name="useSandbox" checked="${instance.useSandbox}" default="false" />
+    </f:entry>
 </j:jelly>

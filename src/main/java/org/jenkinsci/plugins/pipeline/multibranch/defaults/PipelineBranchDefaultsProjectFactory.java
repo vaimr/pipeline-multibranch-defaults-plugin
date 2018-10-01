@@ -26,7 +26,6 @@ package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import hudson.Extension;
 import hudson.model.TaskListener;
-import jenkins.branch.MultiBranchProject;
 import jenkins.scm.api.SCMSource;
 import jenkins.scm.api.SCMSourceCriteria;
 import org.apache.commons.lang.StringUtils;

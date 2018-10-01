@@ -25,9 +25,12 @@
 package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import hudson.Extension;
-import hudson.model.*;
+import hudson.model.Action;
+import hudson.model.Descriptor;
+import hudson.model.DescriptorVisibilityFilter;
+import hudson.model.Queue;
+import hudson.model.TaskListener;
 import jenkins.model.Jenkins;
-import org.jenkinsci.lib.configprovider.ConfigProvider;
 import org.jenkinsci.lib.configprovider.model.Config;
 import org.jenkinsci.plugins.configfiles.ConfigFileStore;
 import org.jenkinsci.plugins.configfiles.GlobalConfigFiles;
@@ -38,7 +41,6 @@ import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.flow.FlowExecutionOwner;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
-import org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory;
 
 import java.util.List;
 

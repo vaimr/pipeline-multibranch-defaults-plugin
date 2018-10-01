@@ -74,16 +74,100 @@ THE SOFTWARE.
         <jenkins.version>1.642.3</jenkins.version>
     </properties>
     <dependencies>
+    <!-- MINIMUM REQUIRED DEPENDENCIES -->
+        <!-- workflow-cps is a runtime dependency -->
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-multibranch</artifactId>
-            <version>2.9.2</version>
+            <artifactId>workflow-cps</artifactId>
+            <version>2.23</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>config-file-provider</artifactId>
             <version>2.15.1</version>
         </dependency>
+        <!-- New versions of pipeline plugins use this workflow-api plugin; just noting here for when I upgrade in the future.
+        Runtime dependency
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-api</artifactId>
+            <version>2.29</version>
+        </dependency>
+        Runtime dependency
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>scm-api</artifactId>
+            <version>2.2.8</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-job</artifactId>
+            <version>2.9</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+    <!-- END REQUIRED DEPENDENCIES -->
+    <!-- UNNECESSARILY REQUIRED BY CREATING A NEW JOB TYPE -->
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-multibranch</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+    <!-- END UNNECESSARILY REQUIRED DEPENDENCIES -->
+    <!-- REQUIRED BY TESTS -->
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>git</artifactId>
+            <version>2.5.2</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- noted requirements for updating minimal dependencies
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>branch-api</artifactId>
+            <version>2.0.20</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-multibranch</artifactId>
+            <version>2.20</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.main</groupId>
+            <artifactId>jenkins-test-harness</artifactId>
+            <version>2.42</version>
+            <scope>test</scope>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-support</artifactId>
+            <version>2.11</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+    <!-- END REQUIRED BY TESTS -->
+    <!-- UNNECESSARILY REQUIRED TEST DEPS BY CREATING A NEW JOB TYPE -->
+    <!--
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>cloudbees-folder</artifactId>
+            <version>6.6</version>
+            <scope>test</scope>
+        </dependency>
+    -->
+    <!-- END UNNECESSARILY REQUIRED BY TESTS -->
 
         <dependency>
             <groupId>com.cloudbees</groupId>
@@ -118,20 +202,6 @@ THE SOFTWARE.
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-support</artifactId>
-            <version>2.11</version>
-            <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-cps</artifactId>
-            <version>2.23</version>
-            <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-scm-step</artifactId>
             <version>2.3</version>
             <classifier>tests</classifier>
@@ -139,18 +209,6 @@ THE SOFTWARE.
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>git</artifactId>
-            <version>2.5.2</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>subversion</artifactId>
             <version>2.6</version>
             <scope>test</scope>
@@ -172,13 +230,6 @@ THE SOFTWARE.
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>subversion</artifactId>
             <version>2.6</version>
-            <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-job</artifactId>
-            <version>2.9</version>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>

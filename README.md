@@ -14,7 +14,11 @@
 - [Example default Jenkinsfile](#example-default-jenkinsfile)
   - [Default scripted pipeline](#default-scripted-pipeline)
   - [Default declarative pipeline](#default-declarative-pipeline)
+- [Example Job DSL configuration](#example-job-dsl-configuration)
+- [Additional recommended plugins](#additional-recommended-plugins)
 - [Release Notes](#release-notes)
+- [Authors](#authors)
+- [License](#license)
 
 Normally, [Jenkins pipelines][pipeline] and [Multibranch pipelines][multibranch]
 requires a developer to save a `Jenkinsfile` in their repository root on one or
@@ -203,6 +207,45 @@ pipeline {
 }
 ```
 
+# Example Job DSL configuration
+
+```groovy
+multibranchPipelineJob('example') {
+    // SCM source or additional configuration
+
+    factory {
+        pipelineBranchDefaultsProjectFactory {
+            // The ID of the default Jenkinsfile to use from the global Config
+            // File Management.
+            scriptId 'Jenkinsfile'
+
+            // If enabled, the configured default Jenkinsfile will be run within
+            // a Groovy sandbox.
+            useSandbox true
+        }
+    }
+}
+
+```
+
+# Additional recommended plugins
+
+The following plugins are recommended as great companion plugins to the pipeline
+multibranch with defaults plugin.
+
+- [Basic Branch Build Strategies Plugin][basic-branch-build-strategies] provides
+  some basic branch build strategies for use with Branch API based projects.
+  This plugin is especially good at limiting tags built.  This is good for
+  projects adopting a tag-based workflow.
+- [SCM Filter Branch PR Plugin][scm-filter-branch-pr] provides wildcard and
+  regex filters for multibranch pipelines which include matching the destination
+  branch of PRs with the filters.  This is necessary if one does not want all
+  branches for a project to be matched by the default Jenkinsfile.  This also
+  allows one to filter tags as well.
+- [Job DSL plugin][job-dsl] allows Jobs and Views to be defined via DSLs.
+  Multibranch pipelines can be automatically created with a default Jenkinsfile
+  configured.  This plugin provides configuration as code for jobs.
+
 # Release Notes
 
 For release notes see [CHANGELOG](CHANGELOG.md).
@@ -218,13 +261,16 @@ See also the list of [contributors](https://github.com/vaimr/workflow-multibranc
 
 [The MIT License](LICENSE)
 
+[basic-branch-build-strategies]: http://wiki.jenkins.io/display/JENKINS/Basic+Branch+Build+Strategies+Plugin
 [build-image]: https://ci.jenkins.io/buildStatus/icon?job=Plugins/pipeline-multibranch-defaults-plugin/master
 [build-link]: https://ci.jenkins.io/job/Plugins/pipeline-multibranch-defaults-plugin/master
 [config-file-provider]: https://github.com/jenkinsci/config-file-provider-plugin
+[job-dsl]: https://wiki.jenkins-ci.org/display/JENKINS/Job+DSL+Plugin
 [multibranch]: https://jenkins.io/doc/book/pipeline/multibranch/
 [pipeline]: https://jenkins.io/doc/book/pipeline/
 [samrocketman]: https://github.com/samrocketman
 [sandbox]: https://jenkins.io/doc/book/managing/script-approval/
+[scm-filter-branch-pr]: https://wiki.jenkins.io/display/JENKINS/SCM+Filter+Branch+PR+Plugin
 [screenshot-configure-file]: https://user-images.githubusercontent.com/875669/46273282-b5c89880-c509-11e8-9425-dbeddf1266a8.png
 [screenshot-manage-files]: https://user-images.githubusercontent.com/875669/46273112-fd9af000-c508-11e8-8464-ec5773121294.png
 [screenshot-multibranch]: https://user-images.githubusercontent.com/875669/46272775-726d2a80-c507-11e8-859c-2836b579423e.png

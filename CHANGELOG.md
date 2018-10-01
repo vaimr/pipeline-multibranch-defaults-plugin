@@ -7,6 +7,8 @@ Pipeline multibranch defaults plugin v1.1 and older created a new Job type named
 Convert all jobs using this old type to a normal `Multibranch Pipeline` job
 type.
 
+**Multibranch Pipeline with defaults** will be removed in a later release.
+
 ### New features
 
 - Sandbox support has been added for better flexibility in security.  See [PR

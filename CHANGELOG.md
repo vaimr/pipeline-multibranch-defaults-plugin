@@ -1,10 +1,11 @@
 # v2.0 Released Oct 1, 2018
 
-### Release notes
+### Warnings
 
-**WARNING:** `Pipeline Multibranch Defaults Project` type will be removed in a
-followup release.  Convert all jobs using this old type to a regular
-`Multibranch Pipeline` type.
+Pipeline multibranch defaults plugin v1.1 and older created a new Job type named
+**Multibranch Pipeline with defaults**.  This is considered a design flaw.
+Convert all jobs using this old type to a normal `Multibranch Pipeline` job
+type.
 
 ### New features
 

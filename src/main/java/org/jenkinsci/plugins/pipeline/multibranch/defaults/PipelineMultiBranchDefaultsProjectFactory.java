@@ -26,22 +26,33 @@
 package org.jenkinsci.plugins.pipeline.multibranch.defaults;
 
 import hudson.Extension;
+import hudson.model.Action;
+import hudson.model.Item;
+import hudson.model.ItemGroup;
 import hudson.model.TaskListener;
+import jenkins.branch.MultiBranchProject;
+import jenkins.branch.MultiBranchProjectFactory;
+import jenkins.branch.MultiBranchProjectFactoryDescriptor;
+import jenkins.branch.OrganizationFolder;
+import jenkins.model.TransientActionFactory;
 import jenkins.scm.api.SCMSource;
 import jenkins.scm.api.SCMSourceCriteria;
 import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.plugins.workflow.flow.FlowDefinition;
-import org.jenkinsci.plugins.workflow.multibranch.AbstractWorkflowBranchProjectFactory;
+import org.jenkinsci.plugins.workflow.cps.Snippetizer;
+import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Recognizes and builds by default {@code Jenkinsfile}.
  */
-public class PipelineMultiBranchDefaultsProjectFactory extends AbstractWorkflowBranchProjectFactory {
+public class PipelineMultiBranchDefaultsProjectFactory extends MultiBranchProjectFactory.BySCMSourceCriteria {
     public static final String SCRIPT = "Jenkinsfile";
 
     private String scriptId = SCRIPT;
@@ -96,8 +107,17 @@ public class PipelineMultiBranchDefaultsProjectFactory extends AbstractWorkflowB
     }
 
     @Override
-    protected FlowDefinition createDefinition() {
-        return new DefaultsBinder(scriptId, useSandbox);
+    protected WorkflowMultiBranchProject doCreateProject(ItemGroup<?> parent, String name, Map<String,Object> attributes){
+        WorkflowMultiBranchProject project = new WorkflowMultiBranchProject(parent, name);
+        configureProjectFactoryFor(project);
+        return project;
+    }
+
+    @Override
+    public void updateExistingProject(MultiBranchProject<?, ?> project, Map<String, Object> attributes, TaskListener listener) throws IOException, InterruptedException {
+        if (project instanceof WorkflowMultiBranchProject) {
+            configureProjectFactoryFor((WorkflowMultiBranchProject) project);
+        }
     }
 
     @Override
@@ -121,11 +141,41 @@ public class PipelineMultiBranchDefaultsProjectFactory extends AbstractWorkflowB
     }
 
     @Extension
-    public static class DescriptorImpl extends AbstractWorkflowBranchProjectFactoryDescriptor {
+    public static class PerFolderAdder extends TransientActionFactory<OrganizationFolder> {
+
+        @Override
+        public Class<OrganizationFolder> type() {
+            return OrganizationFolder.class;
+        }
+
+        @Override
+        public Collection<? extends Action> createFor(OrganizationFolder target) {
+            if (target.getProjectFactories().get(PipelineMultiBranchDefaultsProjectFactory.class) != null && target.hasPermission(Item.EXTENDED_READ)) {
+                return Collections.singleton(new Snippetizer.LocalAction());
+            } else {
+                return Collections.emptySet();
+            }
+        }
+    }
+
+    @Extension
+    public static class DescriptorImpl extends MultiBranchProjectFactoryDescriptor {
+        @Override
+        public MultiBranchProjectFactory newInstance() {
+            return null;
+        }
+
         @Nonnull
         @Override
         public String getDisplayName() {
             return "by default " + SCRIPT;
         }
+    }
+
+    private void configureProjectFactoryFor(WorkflowMultiBranchProject project) {
+        PipelineBranchDefaultsProjectFactory projectFactory = new PipelineBranchDefaultsProjectFactory();
+        projectFactory.setScriptId(scriptId);
+        projectFactory.setUseSandbox(useSandbox);
+        project.setProjectFactory(projectFactory);
     }
 }

@@ -1,3 +1,16 @@
+# v2.1 Released Sep 11, 2019
+
+### New features
+
+- GitHub organization folders now support a default Jenkinsfile.  See [PR
+  #12][#12].
+
+[#12]: https://github.com/jenkinsci/pipeline-multibranch-defaults-plugin/pull/12
+
+### Warnings
+
+**Multibranch Pipeline with defaults** job type will be removed next release.
+
 # v2.0 Released Oct 1, 2018
 
 ### Warnings
